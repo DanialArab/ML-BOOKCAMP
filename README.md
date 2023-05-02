@@ -38,11 +38,11 @@ In machine learning, we give the system the input and output data, and the resul
 
 **4.** different types of supervised learning algorithms:
 
-    -- regression
-    
-    -- classification (binary vs. multiclass)
-    
-    -- **ranking**: the **target variable y is an ordering of elements within a group**, such as the order of pages in a search-result page. The problem of ranking often happens in areas like **search and recommendations**, but it’s out of the scope of this book and we won’t cover it in detail.
++ regression
+
++ classification (binary vs. multiclass)
+
++ **ranking**: the **target variable y is an ordering of elements within a group**, such as the order of pages in a search-result page. The problem of ranking often happens in areas like **search and recommendations**, but it’s out of the scope of this book and we won’t cover it in detail.
 
 **5.** **Cross-Industry Standard Process for Data Mining (CRISP-DM)**
 
@@ -56,6 +56,7 @@ Certain techniques and frameworks help us organize a machine learning project in
         6 Deployment
         
 ![alt text](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/CRISP-DM_process.PNG)
+
 **Figure 1 The CRISP-DM process. A machine learning project starts with understanding the problem and then moves into data preparation, training the model, and evaluating the results. Finally, the model goes to deployment. This process is iterative, and at each step, it’s possible to go back to the previous one.**
 
 # 6. 
