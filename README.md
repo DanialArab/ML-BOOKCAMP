@@ -515,6 +515,8 @@ calculate the feature importance scores
 <a name="5"></b>
 ### 4.1 Evaluation metrics for regression
 
+**26.** Metrics for regression:
+
 **1. Mean Squared Error (MSE)**
 
 This is the average of the squared differences between the predicted values and the actual values. It measures the average of the squared distances between the predicted and actual values, *giving more weight to larger differences*. The lower the MSE, the better the model's performance.
@@ -532,25 +534,25 @@ In summary, MSE can serve both as a metric to evaluate the performance of a mode
 
 **2. root mean squared error (RMSE)**
 
-    It is in the same units as the original data and is easier to interpret. Like the MSE, the lower the RMSE, the better the model's performance. rmse of 0.75 tells us that on average, the model’s predictions are off by 0.75. This result alone may not be very useful, but we can use it to compare this model with other models. If one model has a better (lower) RMSE than the other,it indicates that model is better. 
+It is in the same units as the original data and is easier to interpret. Like the MSE, the lower the RMSE, the better the model's performance. rmse of 0.75 tells us that on average, the model’s predictions are off by 0.75. This result alone may not be very useful, but we can use it to compare this model with other models. If one model has a better (lower) RMSE than the other,it indicates that model is better. 
 
 ![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/rmse.PNG)
 
 **3. Mean absolute error (MAE)**
 
-    This is the average of the absolute differences between the predicted values and the actual values. It measures the average of the absolute distances between the predicted and actual values, *giving equal weight to all differences*. The lower the MAE, the better the model's performance.
+This is the average of the absolute differences between the predicted values and the actual values. It measures the average of the absolute distances between the predicted and actual values, *giving equal weight to all differences*. The lower the MAE, the better the model's performance.
 
 ![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/mae.png)
 
 **4. Mean Absolute Percentage Error (MAPE)**
 
-    This measures the average percentage difference between the predicted (g(x)) and actual values (y). It is calculated as the average of the absolute percentage differences between predicted and actual values. MAPE is commonly used in forecasting models.
+This measures the average percentage difference between the predicted (g(x)) and actual values (y). It is calculated as the average of the absolute percentage differences between predicted and actual values. MAPE is commonly used in forecasting models.
 
 ![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/MAPE.png)
 
 **5. R-squared (R2)**
         
-    This measures the *proportion of the variance in the dependent variable that is explained by the independent variables*. It is also called the coefficient of determination because it determines how much of the variability in the dependent variable can be explained by the independent variables.It ranges from 0 to 1, with 1 indicating a perfect fit and 0 indicating no fit. The higher the R2, the better the model's performance.
+This measures the *proportion of the variance in the dependent variable that is explained by the independent variables*. It is also called the coefficient of determination because it determines how much of the variability in the dependent variable can be explained by the independent variables.It ranges from 0 to 1, with 1 indicating a perfect fit and 0 indicating no fit. The higher the R2, the better the model's performance.
 
 
 ![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/r_squared.PNG)
@@ -563,7 +565,7 @@ where:
 
 **6. Adjusted R-squared**
 
-    This is a modified version of R-squared that takes into account the *number of independent variables in the model*. It penalizes models with too many variables, which may result in overfitting. The adjusted R-squared value is always lower than the R-squared value, and the difference between the two values becomes greater as the number of independent variables increases. A higher value of adjusted R-squared indicates a better fit between the model and the data, taking into account the number of independent variables in the model.
+This is a modified version of R-squared that takes into account the *number of independent variables in the model*. It penalizes models with too many variables, which may result in overfitting. The adjusted R-squared value is always lower than the R-squared value, and the difference between the two values becomes greater as the number of independent variables increases. A higher value of adjusted R-squared indicates a better fit between the model and the data, taking into account the number of independent variables in the model.
 
 ![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/adjusted%20r%20squared.PNG)
 
@@ -578,32 +580,33 @@ Therefore, it is generally recommended to use the adjusted R-squared rather than
 <a name="6"></a>
 ### 4.2 Evaluation metrics for classification
 
-# 26. Dummy baseline
+# 27. Dummy baseline
 In our example, the dataset is **imbalanced**, and we don’t have many churned users. So, **the dummy model can always predict the majority class** — “no churn.” In other words, this model will always output False, regardless of the features. This is not a super useful model, but we can use it as a baseline and compare it with the other two models.
 
 As we see, the small model is only 2% better than the naive baseline, and the large one is 6% better. If we think about all the trouble we have gone through to train this large model, 6% doesn’t seem like a significant improvement over the dummy baseline.
 
 Churn prediction is a complex problem, and maybe this improvement is great. However, that’s not evident from the accuracy score alone. According to accuracy, our model is only slightly better than a dummy model that treats all the customers as nonchurning and doesn’t attempt to keep any of them. Thus, we need other metrics — other ways of measuring the quality of our model. These metrics are based on the **confusion table**, the concept that we cover in the next section.
 
-# 27. Confusion table
+# 28. Confusion table
 For such cases where we have **imbalanced dataset**, we need a different way of measuring the quality of our models. We have a few options, and **most of them are based on the confusion table**: a table that concisely represents every possible outcome for our model’s predictions.
 
 ![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/classification%20metrics.PNG)    
 
-    
+**29.** Metrics for classification:
+
 **1. Accuracy**
 
-    Accuracy is a measure of how many predictions the model got correct out of all the predictions it made. It is calculated as the number of correct predictions divided by the total number of predictions. Accuracy can be a useful metric for evaluating a classification model, but it's not always the most reliable or informative metric, especially when the classes are imbalanced.
+Accuracy is a measure of how many predictions the model got correct out of all the predictions it made. It is calculated as the number of correct predictions divided by the total number of predictions. Accuracy can be a useful metric for evaluating a classification model, but it's not always the most reliable or informative metric, especially when the classes are imbalanced.
 
-    When the classes in the data are imbalanced, meaning that there are significantly more instances of one class than the other(s), accuracy can be misleading. A classifier that always predicts the majority class, i.e., a dummy baseline model, can achieve high accuracy, but it may not be useful for identifying instances of the minority class. In this case, other metrics such as precision, recall, and F1-score can provide a better assessment of the model's performance.
+When the classes in the data are imbalanced, meaning that there are significantly more instances of one class than the other(s), accuracy can be misleading. A classifier that always predicts the majority class, i.e., a dummy baseline model, can achieve high accuracy, but it may not be useful for identifying instances of the minority class. In this case, other metrics such as precision, recall, and F1-score can provide a better assessment of the model's performance.
 
-    Another limitation of accuracy is that it doesn't take into account the cost of misclassifying the different classes. In some cases, misclassifying one class may have more severe consequences than misclassifying another class. For example, in a medical diagnosis application, misclassifying a disease as non-disease may have more severe consequences than misclassifying non-disease as disease.
+Another limitation of accuracy is that it doesn't take into account the cost of misclassifying the different classes. In some cases, misclassifying one class may have more severe consequences than misclassifying another class. For example, in a medical diagnosis application, misclassifying a disease as non-disease may have more severe consequences than misclassifying non-disease as disease.
 
-   Overall, while accuracy can provide a simple and intuitive measure of a classifier's performance, it's important to consider other metrics, especially when the **classes are imbalanced or the cost of misclassification is uneven**.
+Overall, while accuracy can provide a simple and intuitive measure of a classifier's performance, it's important to consider other metrics, especially when the **classes are imbalanced or the cost of misclassification is uneven**.
 
 **2. Confusion Matrix**
 
-    A confusion matrix is a table that shows the number of true positive, true negative, false positive (type 1 error), and false negative (type 2 error) predictions made by the model. It provides a detailed breakdown of the model's performance and can be used to calculate various other metrics, such as accuracy, precision, recall, and F1-score.
+A confusion matrix is a table that shows the number of true positive, true negative, false positive (type 1 error), and false negative (type 2 error) predictions made by the model. It provides a detailed breakdown of the model's performance and can be used to calculate various other metrics, such as accuracy, precision, recall, and F1-score.
 
 ![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/confusion_matrix.PNG)
 
@@ -623,15 +626,15 @@ To summarize, precision, recall, F1 score, and confusion matrix can be used for 
 
 **3. Precision**
 
-    Precision is the fraction of true positive predictions among all **positive predictions** made by the model. In other words, precision measures how accurate the model's positive predictions are.
+Precision is the fraction of true positive predictions among all **positive predictions** made by the model. In other words, precision measures how accurate the model's positive predictions are.
     
-    The better the precision, the fewer false positives we have.
+The better the precision, the fewer false positives we have.
     
 **4. Recall**
 
-    Recall is the fraction of true positive predictions among all **actual positive cases** in the dataset.
-    
-    The better the recall, the fewer false negatives we have.
+Recall is the fraction of true positive predictions among all **actual positive cases** in the dataset.
+
+The better the recall, the fewer false negatives we have.
 
 We see that both precision and recall don’t take **true negatives** into account. **This is exactly why they are good evaluation metrics for imbalanced datasets.** For situations with class imbalance, true negatives typically outnumber everything else — but at the same time, they are also often not really interesting for us. Precision and recall are useful metrics, but they describe the performance of a classifier only at a **certain threshold**. Often it’s useful to have a metric that summarizes the performance of a classifier for all possible threshold choices. We look at such metrics in the next section.
 
@@ -644,8 +647,8 @@ ROC stands for **receiver operating characteristic,** and it was initially desig
 
 We need two metrics for ROC curves: **TPR (true positive rate) and FPR (false positive rate)**:
 
-    TPR: the fraction of true positives among all positive examples. Note that TPR is the same as recall, so the higher the TPR is, the better.
-    FPR: the fraction of false positives among all negative examples. A small value for FPR tells us that a model is good — it has few false positives:
++ TPR: the fraction of true positives among all positive examples. Note that TPR is the same as recall, so the higher the TPR is, the better.
++ FPR: the fraction of false positives among all negative examples. A small value for FPR tells us that a model is good — it has few false positives:
 
 Like precision and recall, these values are based on the confusion matrix. We can calculate them using the following formulas:
 ![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/TPR_and_FPR.png)
@@ -654,8 +657,8 @@ However, we still consider FPR and TPR metrics at only one threshold value — i
 
 Both TPR and FPR start at 100% — at the threshold of 0.0, we predict “churn” for everyone:
 
-    FPR is 100% because we have only false positives in the prediction. There are no true negatives: nobody is predicted as non-churning.
-    TPR is 100% because we have only true positives and no false negatives.
++ FPR is 100% because we have only false positives in the prediction. There are no true negatives: nobody is predicted as non-churning.
++ TPR is 100% because we have only true positives and no false negatives.
 
 ![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/tpr%20fpr%20vs%20thresholds.PNG)
 
@@ -726,11 +729,11 @@ This makes AUC the default classification metric in most situations, and it’s 
 
 **6. F1-score**
 
-    F1-score is the harmonic mean of precision and recall, and is often used as a summary metric for classification models. 
+F1-score is the harmonic mean of precision and recall, and is often used as a summary metric for classification models. 
     
 Andrew's note: 
     
-    F1 score is a way of combining P and R but that gives more emphasis to whichever of these values is lower. Because it turns out if an algorithm has very low precision or very low recall it is not that useful. The F1 score is a way of computing an average that pays more attention to whichever is lower. 
+F1 score is a way of combining P and R but that gives more emphasis to whichever of these values is lower. Because it turns out if an algorithm has very low precision or very low recall it is not that useful. The F1 score is a way of computing an average that pays more attention to whichever is lower. 
 
 
 <a name="7"></a>
