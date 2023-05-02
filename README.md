@@ -515,26 +515,6 @@ calculate the feature importance scores
 <a name="5"></b>
 ### 4.1 Evaluation metrics for regression
 
-# 26. Dummy baseline
-In our example, the dataset is **imbalanced**, and we don’t have many churned users. So, **the dummy model can always predict the majority class** — “no churn.” In other words, this model will always output False, regardless of the features. This is not a super useful model, but we can use it as a baseline and compare it with the other two models.
-
-As we see, the small model is only 2% better than the naive baseline, and the large one is 6% better. If we think about all the trouble we have gone through to train this large model, 6% doesn’t seem like a significant improvement over the dummy baseline.
-
-Churn prediction is a complex problem, and maybe this improvement is great. However, that’s not evident from the accuracy score alone. According to accuracy, our model is only slightly better than a dummy model that treats all the customers as nonchurning and doesn’t attempt to keep any of them. Thus, we need other metrics — other ways of measuring the quality of our model. These metrics are based on the **confusion table**, the concept that we cover in the next section.
-
-# 27. Confusion table
-For such cases where we have **imbalanced dataset**, we need a different way of measuring the quality of our models. We have a few options, and **most of them are based on the confusion table**: a table that concisely represents every possible outcome for our model’s predictions.
-
-**28. 
-
-<a name="6"></a>
-### 4.2 Evaluation metrics for classification
-
-
-## 12. What are metrics for evaluating model's performance?
-
-### 12.1 for regression
-
 **1. Mean Squared Error (MSE)**
 
     This is the average of the squared differences between the predicted values and the actual values. It measures the average of the squared distances between the predicted and actual values, *giving more weight to larger differences*. The lower the MSE, the better the model's performance.
@@ -596,7 +576,18 @@ The adjusted R-squared statistic addresses this limitation by penalizing the add
 
 Therefore, it is generally recommended to use the adjusted R-squared rather than the normal R-squared when comparing models, especially when the models have different numbers of variables. This ensures that the comparison is fair and accurate, and helps to avoid overfitting or underfitting the data.
 
-### 12.2 for classification
+<a name="6"></a>
+### 4.2 Evaluation metrics for classification
+
+# 26. Dummy baseline
+In our example, the dataset is **imbalanced**, and we don’t have many churned users. So, **the dummy model can always predict the majority class** — “no churn.” In other words, this model will always output False, regardless of the features. This is not a super useful model, but we can use it as a baseline and compare it with the other two models.
+
+As we see, the small model is only 2% better than the naive baseline, and the large one is 6% better. If we think about all the trouble we have gone through to train this large model, 6% doesn’t seem like a significant improvement over the dummy baseline.
+
+Churn prediction is a complex problem, and maybe this improvement is great. However, that’s not evident from the accuracy score alone. According to accuracy, our model is only slightly better than a dummy model that treats all the customers as nonchurning and doesn’t attempt to keep any of them. Thus, we need other metrics — other ways of measuring the quality of our model. These metrics are based on the **confusion table**, the concept that we cover in the next section.
+
+# 27. Confusion table
+For such cases where we have **imbalanced dataset**, we need a different way of measuring the quality of our models. We have a few options, and **most of them are based on the confusion table**: a table that concisely represents every possible outcome for our model’s predictions.
 
 ![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/classification%20metrics.PNG)    
 
