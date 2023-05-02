@@ -10,7 +10,7 @@ This repository documents my notes from the book Machine Learning Bookcamp by Al
 
 3. [Machine learning for classification](#3)
 
-4. [Evaluation metrics for classification](#4)
+4.1 [Evaluation metrics for classification](#4.1)
 
 5. [Deploying machine learning models](#5)
 
