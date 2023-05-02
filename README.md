@@ -133,7 +133,7 @@ here is how I **coded normal equation**:
 
 **14.** When I have categorical data I want to apply one hot encoding, I do not need to have all the categories, within one column I mean, which may be even a bad thing and leading to an error in model training! What I learned that was to go with the like most 5 categories like I can find the most common ones easily through using value_counts like
 
-        df['market_category'].value_counts().head()
+    df['market_category'].value_counts().head()
 
 so what I did was to perform one hot encoding using my following function
 
@@ -153,9 +153,7 @@ then
     encoded_data = category_maker (df, (['market_category']))
     encoded_data_final = encoded_data.loc[:, added_market_category_categorical]
 
-**15. Regularization**
-
-We saw that adding new features does not always help, and in our case, it made things a lot worse. The reason for this behavior is **numerical instability**. One of the terms in the normal equation is the **inverse of the (np.dot(X.T, X)) matrix**. The **inversion is the issue** in our case. Sometimes, when adding new columns to X, we can accidentally add a column that is a combination of other columns. For example, if we already have the mile per gallon (MPG) in the city feature and decide to add kilometers per liter in the city, the second feature is the same as the first one but multiplied by a constant. When this happens, np.dot(X.T, X) becomes **undetermined or singular, which means that it’s not possible to find an inverse for this matrix**. If we try to invert a singular matrix, NumPy will tell us about that by raising a **LinAlgError: Singular matrix**.
+**15. Regularization**: We saw that adding new features does not always help, and in our case, it made things a lot worse. The reason for this behavior is **numerical instability**. One of the terms in the normal equation is the **inverse of the (np.dot(X.T, X)) matrix**. The **inversion is the issue** in our case. Sometimes, when adding new columns to X, we can accidentally add a column that is a combination of other columns. For example, if we already have the mile per gallon (MPG) in the city feature and decide to add kilometers per liter in the city, the second feature is the same as the first one but multiplied by a constant. When this happens, np.dot(X.T, X) becomes **undetermined or singular, which means that it’s not possible to find an inverse for this matrix**. If we try to invert a singular matrix, NumPy will tell us about that by raising a **LinAlgError: Singular matrix**.
 
 We may not get this error but end up having a bad model with high rmse, in these cases our code doesn’t raise any exceptions. It happened because we don’t typically have columns that are perfect linear combinations of other columns. The real data is often **noisy**, with measurement errors (such as recording 1.3 instead of 13 for MPG), rounding errors (such as storing 0.0999999 instead of 0.1), and many other errors. Technically, such matrices are not singular, so NumPy doesn’t complain.
 
@@ -179,14 +177,15 @@ here is my code to perform ridge (normalized linear regression - normal equation
         reg_term = np.eye(np.dot(X.T, X).shape[0]) * alpha 
         return np.dot(np.dot(np.linalg.inv(np.dot(X.T, X) + reg_term), X.T), y)
 
-# 16. Feature scaling in applying GD vs. Normal equation
+**16.** Feature scaling in applying GD vs. Normal equation
 
 from chatGPT:
 In general, you **don't need to perform feature scaling when using the normal equation for linear regression. However, feature scaling can sometimes help to improve the numerical stability of the computations.**
 
 **On the other hand, when using gradient descent, it is highly recommended to perform feature scaling to help the algorithm converge faster and more reliably.** This is because gradient descent works better when the features are on a similar scale. When the features are on different scales, the optimization algorithm might take longer to converge, or it might oscillate back and forth, making it difficult to find the optimal solution.
 
-# 17. scikit-learn implementation of LinearRegression = Normal eq. + regularization
+**17.** scikit-learn implementation of LinearRegression = Normal eq. + regularization
+
 my question for chatGPT:
 
 does **from sklearn.linear_model import LinearRegression** use normal equation?
