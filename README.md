@@ -725,7 +725,7 @@ AUC thus not only gives us a way of evaluating the models at all possible thresh
 
 You should keep this interpretation in mind: it provides an easy way to explain the meaning behind AUC to people without a machine learning background, such as managers and other decision makers.
 
-This makes AUC the default classification metric in most situations, and it’s often the metric we use when finding the best parameter set for our models. The process of finding the best parameters is called **parameter tuning,**. 
+This makes AUC the default classification metric in most situations, and it’s often the metric we use when finding the best parameter set for our models. The process of finding the best parameters is called **parameter tuning**. 
 
 
 **6. F1-score**
@@ -735,6 +735,8 @@ F1-score is the harmonic mean of precision and recall, and is often used as a su
 Andrew's note: 
     
 F1 score is a way of combining P and R but that gives more emphasis to whichever of these values is lower. Because it turns out if an algorithm has very low precision or very low recall it is not that useful. The F1 score is a way of computing an average that pays more attention to whichever is lower. 
+
+**29. Parameter tuning**
 
 
 <a name="7"></a>
