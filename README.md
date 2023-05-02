@@ -580,7 +580,8 @@ Therefore, it is generally recommended to use the adjusted R-squared rather than
 <a name="6"></a>
 ### 4.2 Evaluation metrics for classification
 
-**27.** Dummy baseline
+**27.** Dummy baseline:
+
 In our example, the dataset is **imbalanced**, and we don’t have many churned users. So, **the dummy model can always predict the majority class** — “no churn.” In other words, this model will always output False, regardless of the features. This is not a super useful model, but we can use it as a baseline and compare it with the other two models.
 
 As we see, the small model is only 2% better than the naive baseline, and the large one is 6% better. If we think about all the trouble we have gone through to train this large model, 6% doesn’t seem like a significant improvement over the dummy baseline.
