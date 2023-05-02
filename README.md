@@ -560,8 +560,8 @@ This measures the *proportion of the variance in the dependent variable that is 
 
 where:
 
-    SSres is the sum of squared residuals or the sum of squared differences between the predicted values and the actual values.
-    SStot is the total sum of squares or the sum of squared differences between the actual values and the mean of the dependent variable.
++ SSres is the sum of squared residuals or the sum of squared differences between the predicted values and the actual values.
++ SStot is the total sum of squares or the sum of squared differences between the actual values and the mean of the dependent variable.
 
 **6. Adjusted R-squared**
 
