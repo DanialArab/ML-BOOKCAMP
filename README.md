@@ -517,8 +517,7 @@ calculate the feature importance scores
 
 **1. Mean Squared Error (MSE)**
 
-    This is the average of the squared differences between the predicted values and the actual values. It measures the average of the squared distances between the predicted and actual values, *giving more weight to larger differences*. The lower the MSE, the better the model's performance.
-
+This is the average of the squared differences between the predicted values and the actual values. It measures the average of the squared distances between the predicted and actual values, *giving more weight to larger differences*. The lower the MSE, the better the model's performance.
     
 ![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/mse.png)
 
