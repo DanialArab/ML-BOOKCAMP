@@ -28,10 +28,9 @@ This repository documents my notes from the book Machine Learning Bookcamp by Al
 
 This section contains basic stuff, which was a good review and so I took some notes, as follow:
 
-**1.** machine learning projects are different from traditional software engineering **(rule-based solutions)**
+**1.** Machine learning projects are different from traditional software engineering projects, which are **(rule-based solutions)**
 
-+ 2. 
-**CRISP-DM** is a step-by-step methodology for implementing successful machine learning projects
+**2.** **CRISP-DM** is a step-by-step methodology for implementing successful machine learning projects
 
 # 3. 
 In summary, the difference between a traditional software system and a system based on machine learning:
