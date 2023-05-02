@@ -11,7 +11,8 @@ This repository documents my notes from the book Machine Learning Bookcamp by Al
 3. [Machine learning for classification](#3)
 
 4. [Evaluation metrics](#4)
-    1. [Evaluation metrics for regression](#4)
+    1. [Evaluation metrics for regression](#5)
+    2. [Evaluation metrics for classification](#6)
 
 5. [Deploying machine learning models](#5)
 
@@ -512,7 +513,7 @@ calculate the feature importance scores
 ## 4.1 Evaluation metrics
 
 <a name="5"></b>
-## 1 Evaluation metrics for classification
+### 4.1 Evaluation metrics for regression
 
 # 26. Dummy baseline
 In our example, the dataset is **imbalanced**, and we don’t have many churned users. So, **the dummy model can always predict the majority class** — “no churn.” In other words, this model will always output False, regardless of the features. This is not a super useful model, but we can use it as a baseline and compare it with the other two models.
@@ -526,8 +527,8 @@ For such cases where we have **imbalanced dataset**, we need a different way of 
 
 **28. 
 
-<a name="4.2"></a>
-## 4.2 Evaluation metrics for regression
+<a name="6"></a>
+### 4.2 Evaluation metrics for classification
 
 
 ## 12. What are metrics for evaluating model's performance?
