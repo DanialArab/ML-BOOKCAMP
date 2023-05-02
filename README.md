@@ -507,8 +507,236 @@ calculate the feature importance scores
     for feature, importance in sorted(feat_imp_dict.items(), key=lambda x: x[1], reverse=True):
         print(feature + ': {:.2f}'.format(importance))
         
-<a name="4"></a>
-## 4. Evaluation metrics for classification
+<a name="4.1"></a>
+## 4.1 Evaluation metrics for classification
+
+# 26. Dummy baseline
+In our example, the dataset is **imbalanced**, and we don’t have many churned users. So, **the dummy model can always predict the majority class** — “no churn.” In other words, this model will always output False, regardless of the features. This is not a super useful model, but we can use it as a baseline and compare it with the other two models.
+
+As we see, the small model is only 2% better than the naive baseline, and the large one is 6% better. If we think about all the trouble we have gone through to train this large model, 6% doesn’t seem like a significant improvement over the dummy baseline.
+
+Churn prediction is a complex problem, and maybe this improvement is great. However, that’s not evident from the accuracy score alone. According to accuracy, our model is only slightly better than a dummy model that treats all the customers as nonchurning and doesn’t attempt to keep any of them. Thus, we need other metrics — other ways of measuring the quality of our model. These metrics are based on the **confusion table**, the concept that we cover in the next section.
+
+# 27. Confusion table
+For such cases where we have **imbalanced dataset**, we need a different way of measuring the quality of our models. We have a few options, and **most of them are based on the confusion table**: a table that concisely represents every possible outcome for our model’s predictions.
+
+**28. 
+
+<a name="4.2"></a>
+## 4.2 Evaluation metrics for regression
+
+
+## 12. What are metrics for evaluating model's performance?
+
+### 12.1 for regression
+
+**1. Mean Squared Error (MSE)**
+
+    This is the average of the squared differences between the predicted values and the actual values. It measures the average of the squared distances between the predicted and actual values, *giving more weight to larger differences*. The lower the MSE, the better the model's performance.
+
+    
+![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/mse.png)
+
+#### Mean Squared Error  as metric is also cost function?
+Yes, that's correct! Mean Squared Error (MSE) can be both a metric and a cost function.
+
+As a metric, MSE is used to evaluate the performance of a machine learning model on a validation set or test set. It measures the average squared difference between the predicted and actual values of the target variable. The lower the MSE value, the better the model's performance.
+
+As a cost function, MSE is used to train machine learning models. During the training process, the model tries to minimize the MSE value by adjusting its parameters. The MSE value is calculated based on the predicted and actual values of the target variable for the training set. By minimizing the MSE value, the model learns to make more accurate predictions.
+
+In summary, MSE can serve both as a metric to evaluate the performance of a model and as a cost function to train a model.
+
+**2. root mean squared error (RMSE)**
+
+    It is in the same units as the original data and is easier to interpret. Like the MSE, the lower the RMSE, the better the model's performance. rmse of 0.75 tells us that on average, the model’s predictions are off by 0.75. This result alone may not be very useful, but we can use it to compare this model with other models. If one model has a better (lower) RMSE than the other,it indicates that model is better. 
+
+![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/rmse.PNG)
+
+**3. Mean absolute error (MAE)**
+
+    This is the average of the absolute differences between the predicted values and the actual values. It measures the average of the absolute distances between the predicted and actual values, *giving equal weight to all differences*. The lower the MAE, the better the model's performance.
+
+![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/mae.png)
+
+**4. Mean Absolute Percentage Error (MAPE)**
+
+    This measures the average percentage difference between the predicted (g(x)) and actual values (y). It is calculated as the average of the absolute percentage differences between predicted and actual values. MAPE is commonly used in forecasting models.
+
+![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/MAPE.png)
+
+**5. R-squared (R2)**
+        
+    This measures the *proportion of the variance in the dependent variable that is explained by the independent variables*. It is also called the coefficient of determination because it determines how much of the variability in the dependent variable can be explained by the independent variables.It ranges from 0 to 1, with 1 indicating a perfect fit and 0 indicating no fit. The higher the R2, the better the model's performance.
+
+
+![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/r_squared.PNG)
+
+
+where:
+
+    SSres is the sum of squared residuals or the sum of squared differences between the predicted values and the actual values.
+    SStot is the total sum of squares or the sum of squared differences between the actual values and the mean of the dependent variable.
+
+**6. Adjusted R-squared**
+
+    This is a modified version of R-squared that takes into account the *number of independent variables in the model*. It penalizes models with too many variables, which may result in overfitting. The adjusted R-squared value is always lower than the R-squared value, and the difference between the two values becomes greater as the number of independent variables increases. A higher value of adjusted R-squared indicates a better fit between the model and the data, taking into account the number of independent variables in the model.
+
+![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/adjusted%20r%20squared.PNG)
+
+**important point**:
+
+When comparing models, it's important to use an appropriate measure to evaluate their performance. While the R-squared statistic is commonly used to measure the goodness of fit of a model, it has a **limitation in that it can increase as more variables are added to the model, even if they do not improve the model's predictive power.**
+
+The adjusted R-squared statistic addresses this limitation by penalizing the addition of variables that do not improve the model's performance, thereby providing a more accurate measure of a model's goodness of fit. The adjusted R-squared takes into account the number of variables in the model and adjusts the R-squared accordingly.
+
+Therefore, it is generally recommended to use the adjusted R-squared rather than the normal R-squared when comparing models, especially when the models have different numbers of variables. This ensures that the comparison is fair and accurate, and helps to avoid overfitting or underfitting the data.
+
+### 12.2 for classification
+
+![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/classification%20metrics.PNG)    
+
+    
+**1. Accuracy**
+
+    Accuracy is a measure of how many predictions the model got correct out of all the predictions it made. It is calculated as the number of correct predictions divided by the total number of predictions. Accuracy can be a useful metric for evaluating a classification model, but it's not always the most reliable or informative metric, especially when the classes are imbalanced.
+
+    When the classes in the data are imbalanced, meaning that there are significantly more instances of one class than the other(s), accuracy can be misleading. A classifier that always predicts the majority class, i.e., a dummy baseline model, can achieve high accuracy, but it may not be useful for identifying instances of the minority class. In this case, other metrics such as precision, recall, and F1-score can provide a better assessment of the model's performance.
+
+    Another limitation of accuracy is that it doesn't take into account the cost of misclassifying the different classes. In some cases, misclassifying one class may have more severe consequences than misclassifying another class. For example, in a medical diagnosis application, misclassifying a disease as non-disease may have more severe consequences than misclassifying non-disease as disease.
+
+   Overall, while accuracy can provide a simple and intuitive measure of a classifier's performance, it's important to consider other metrics, especially when the **classes are imbalanced or the cost of misclassification is uneven**.
+
+**2. Confusion Matrix**
+
+    A confusion matrix is a table that shows the number of true positive, true negative, false positive (type 1 error), and false negative (type 2 error) predictions made by the model. It provides a detailed breakdown of the model's performance and can be used to calculate various other metrics, such as accuracy, precision, recall, and F1-score.
+
+![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/confusion_matrix.PNG)
+
+When we substitute the **number of times each outcome happens**, we get the confusion table for our model.
+
+The values from the confusion table serve as the basis for many other evaluation metrics.
+
+Precision and recall both help us understand the quality of the model in cases of **class imbalance**.
+
+Precision, recall, F1 score, and confusion matrix can be used for binary classification as well as multi-class classification problems. However, the definitions and calculations of these metrics may differ slightly between binary and multi-class classification.
+
+In binary classification, there are two possible classes, and the confusion matrix has four elements: true positive (TP), false positive (FP), true negative (TN), and false negative (FN). Precision, recall, and F1 score are calculated based on these four elements.
+
+In multi-class classification, there are three or more possible classes, and the confusion matrix is a square matrix with dimensions equal to the number of classes. The elements of the matrix represent the number of times a sample was classified into a particular class. Precision, recall, and F1 score can be calculated for each class separately using the values from the corresponding row and column of the confusion matrix.
+
+To summarize, precision, recall, F1 score, and confusion matrix can be used for both binary and multi-class classification problems, but the way they are calculated and interpreted may differ depending on the specific problem. 
+
+**3. Precision**
+
+    Precision is the fraction of true positive predictions among all **positive predictions** made by the model. In other words, precision measures how accurate the model's positive predictions are.
+    
+    The better the precision, the fewer false positives we have.
+    
+**4. Recall**
+
+    Recall is the fraction of true positive predictions among all **actual positive cases** in the dataset.
+    
+    The better the recall, the fewer false negatives we have.
+
+We see that both precision and recall don’t take **true negatives** into account. **This is exactly why they are good evaluation metrics for imbalanced datasets.** For situations with class imbalance, true negatives typically outnumber everything else — but at the same time, they are also often not really interesting for us. Precision and recall are useful metrics, but they describe the performance of a classifier only at a **certain threshold**. Often it’s useful to have a metric that summarizes the performance of a classifier for all possible threshold choices. We look at such metrics in the next section.
+
+**5. ROC (receiver operating characteristics) and AUC (area under the ROC curve)**
+
+The metrics we have covered so far work only with binary predictions — when we have only True and False values in the output. However, we do have ways to evaluate the performance of a model across all possible threshold choices. ROC curves is one of
+these options.
+
+ROC stands for **receiver operating characteristic,** and it was initially designed for evaluating the strength of radar detectors during World War II. It was used to assess how well a detector could separate two signals: whether an airplane was there or not. Nowadays it’s used for a similar purpose: it shows **how well a model can separate two classes, positive and negative**. In our case, these classes are “churn” and “no churn.”
+
+We need two metrics for ROC curves: **TPR (true positive rate) and FPR (false positive rate)**:
+
+    TPR: the fraction of true positives among all positive examples. Note that TPR is the same as recall, so the higher the TPR is, the better.
+    FPR: the fraction of false positives among all negative examples. A small value for FPR tells us that a model is good — it has few false positives:
+
+Like precision and recall, these values are based on the confusion matrix. We can calculate them using the following formulas:
+![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/TPR_and_FPR.png)
+
+However, we still consider FPR and TPR metrics at only one threshold value — in our case, 0.5. To be able to **use them for ROC curves, we need to calculate these metrics for many different threshold values.**
+
+Both TPR and FPR start at 100% — at the threshold of 0.0, we predict “churn” for everyone:
+
+    FPR is 100% because we have only false positives in the prediction. There are no true negatives: nobody is predicted as non-churning.
+    TPR is 100% because we have only true positives and no false negatives.
+
+![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/tpr%20fpr%20vs%20thresholds.PNG)
+
+As the threshold grows, both metrics decline but at different rates. **Ideally, FPR should go down very quickly.** A small FPR indicates that the model makes very few mistakes predicting negative examples (false positives).
+
+On the other hand, **TPR should go down slowly**, ideally staying near 100% all the time: that will mean that the model predicts true positives well.
+
+To better understand what these TPR and FPR mean, let’s compare it with two baseline models: a random model and the ideal model.
+
+**random baseline model**
+A random model outputs a random score between 0 and 1, regardless of the input. It’s easy to implement — we simply generate an array with uniform random numbers:
+
+    np.random.seed(1)
+    y_rand = np.random.uniform(0, 1, size=len(y_val))
+
+The code np.random.uniform(0,1, size=len(y_val)) generates a NumPy array of length size=len(y_val) with random values that are uniformly distributed between 0 and 1. (In probability theory and statistics, a uniform distribution is a probability distribution where all values in a given range are equally likely to occur. For example, if we have a uniform distribution between 0 and 1, any value between 0 and 1 is equally likely to be generated by a random variable following this distribution)
+
+**the ideal model**
+The ideal model always makes correct decisions. We’ll take it a step further and consider the ideal ranking model. This model outputs scores in such a way that churning customers always have higher scores than non-churning ones. In other words, the
+predicted probability for all churned ones should be higher than the predicted probability for non-churned ones.
+
+**ROC curve**
+To create an ROC curve, instead of plotting FPR and TPR against different threshold values, **we plot them against each other (TPR vs. FPR)**. For comparison, we also add the ideal and random models to the plot.
+
+![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/roc%20curve.PNG)
+
+we can see that the ROC curve of the random classifier is an approximately straight line from bottom left to top right. For the ideal model, however, the curve first goes up until it reaches 100% TPR, and from there it goes right until it reaches 100% FPR. Our models should always be somewhere between these two curves. We want our model to be as close to the ideal curve as possible and as far as possible from the random curve. The ROC curve of a random model serves as a good visual baseline — when we add it to the plot, it helps us to judge how far our model is from this baseline — so it’s a good idea to always include this line in the plot. However, we don’t really need to generate a random model each time we want to have an ROC curve: we know what it looks like, so we can simply include a straight line from (0, 0) to (1, 1) in the plot.
+
+As for the ideal model, we know that it always goes up to (0, 1) and then goes right to (1, 1). The top-left corner is called the “ideal spot”: it’s the point when the ideal model gets 100% TPR and 0% FPR. We want our models to get as close to the ideal spot as possible. With this information, we can reduce the code for plotting the curve to the following:
+
+    plt.figure(figsize=(5, 5))
+    plt.plot(conf_mat_df.FPR, conf_mat_df.TPR)
+    plt.plot([0, 1], [0, 1])
+
+Although computing all the FPR and TPR values across many thresholds is a good exercise, we don’t need to do it ourselves every time we want to plot an ROC curve. We simply can use the roc_curve function from the metrics package of Scikit-learn:
+
+    from sklearn.metrics import roc_curve
+    fpr, tpr, thresholds = roc_curve(y_val, y_pred)
+    plt.figure(figsize=(5, 5))
+    plt.plot(fpr, tpr)
+    plt.plot([0, 1], [0, 1])
+
+**Area under the ROC curve (AUC)**
+When evaluating our models using the ROC curve, we want them to be as close to the ideal spot and as far from the random baseline as possible. We can quantify this “closeness” by measuring the area under the ROC curve. We can use this metric — abbreviated as AU ROC, or often simply AUC — as a metric for evaluating the performance of a binary classification model. The ideal model forms a 1x1 square, so the area under its ROC curve is 1, or 100%. The random model takes only half of that, so its AUC is 0.5, or 50%. 
+
+An AUC of 0.9 is indicative of a reasonably good model; 0.8 is okay, 0.7 is not very performant, and 0.6 indicates quite poor performance.
+
+To calculate the AUC for our models we can use auc, a function from the metrics package of Scikit-learn:
+
+    from sklearn.metrics import auc
+    auc(df_scores.fpr, df_scores.tpr)
+
+If all we need is the AUC, we don’t need to compute the ROC curve first. We can take a shortcut and use the roc_auc_score function from Scikit-learn, which takes care of everything and simply returns the AUC of our model:
+
+    from sklearn.metrics import roc_auc_score
+    roc_auc_score(y_val, y_pred)
+
+The values from roc_auc_score may be slightly different from AUC computed from the dataframes where we calculated TPR and FPR ourselves: Scikit-learn internally uses a more precise method for creating ROC curves.
+
+ROC curves and AUC scores tell us how well the model separates positive and negative examples. What is more, AUC has a nice probabilistic interpretation: it tells us what the probability is that a randomly selected positive example will have a score higher than a randomly selected negative example. Suppose we randomly pick a customer that we know churned and a customer who didn’t and then apply the model to these customers and see what the score is for each. We want the model to score the churning customer higher than the non-churning one. AUC tells us the probability of that happening: it’s the probability that the score of a randomly selected churning customer is higher than the score of a randomly selected non-churning one.
+
+AUC thus not only gives us a way of evaluating the models at all possible thresholds but also describes how well the model separates two classes: in our case, churning and non-churning. If the separation is good, then we can order the customers such that most of the churning users come first. Such a model will have a good AUC score.
+
+You should keep this interpretation in mind: it provides an easy way to explain the meaning behind AUC to people without a machine learning background, such as managers and other decision makers.
+
+This makes AUC the default classification metric in most situations, and it’s often the metric we use when finding the best parameter set for our models. The process of finding the best parameters is called **parameter tuning,**. 
+
+
+**6. F1-score**
+
+    F1-score is the harmonic mean of precision and recall, and is often used as a summary metric for classification models. 
+    
+Andrew's note: 
+    
+    F1 score is a way of combining P and R but that gives more emphasis to whichever of these values is lower. Because it turns out if an algorithm has very low precision or very low recall it is not that useful. The F1 score is a way of computing an average that pays more attention to whichever is lower. 
+
 
 <a name="5"></a>
 ## 5. Deploying machine learning models
