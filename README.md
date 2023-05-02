@@ -14,15 +14,15 @@ This repository documents my notes from the book Machine Learning Bookcamp by Al
     1. [Evaluation metrics for regression](#5)
     2. [Evaluation metrics for classification](#6)
 
-5. [Deploying machine learning models](#5)
+5. [Deploying machine learning models](#7)
 
-6. [Decision trees and ensemble learning](#6)
+6. [Decision trees and ensemble learning](#8)
 
-7. [Neural networks and deep learning](#7)
+7. [Neural networks and deep learning](#9)
 
-8. [Serverless deep learning](#8)
+8. [Serverless deep learning](#10)
 
-9. [Serving models with Kubernetes and Kubeflow](#9)
+9. [Serving models with Kubernetes and Kubeflow](#11)
 
 
 <a name="1"></a>
@@ -743,17 +743,17 @@ Andrew's note:
     F1 score is a way of combining P and R but that gives more emphasis to whichever of these values is lower. Because it turns out if an algorithm has very low precision or very low recall it is not that useful. The F1 score is a way of computing an average that pays more attention to whichever is lower. 
 
 
-<a name="5"></a>
+<a name="7"></a>
 ## 5. Deploying machine learning models
 
-<a name="6"></a>
+<a name="8"></a>
 ## 6. Decision trees and ensemble learning
 
-<a name="7"></a>
+<a name="9"></a>
 ## 7. Neural networks and deep learning
 
-<a name="8"></a>
+<a name="10"></a>
 ## 8. Serverless deep learning
 
-<a name="9"></a>
+<a name="11"></a>
 ## 9. Serving models with Kubernetes and Kubeflow
