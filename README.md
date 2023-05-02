@@ -69,19 +69,17 @@ Certain techniques and frameworks help us organize a machine learning project in
 <a name="2"></a>
 ## 2. Machine learning for regression
 
-# 9. 
-One of the first steps of exploratory data analysis should always be to look at what **the values of y look like**. We typically do this by checking the distribution of y: a visual description of what the possible values of y can be and how often they occur. This type of visualization is called a histogram.
+**9.** One of the first steps of exploratory data analysis should always be to look at what **the values of y look like**. We typically do this by checking the distribution of y: a visual description of what the possible values of y can be and how often they occur (histogram).
 
-# 10. 
-The **head of a distribution is a range where there are many values**. A **long tail** of a distribution is a case when many values are spread very far from the head — and these values visually appear as a “tail” on the histogram.
+**10.** The **head of a distribution is a range where there are many values**. A **long tail** of a distribution is a case when many values are spread very far from the head — and these values visually appear as a “tail” on the histogram.
 
-# 11. 
-The **long tail makes it quite difficult for us to see the distribution, but it has an even stronger effect on a model: such distribution can greatly confuse the model, so it won’t learn well enough**. So as a part of exploratory data analysis, we need to check the distribution of the target variable. If the target distribution has a long tail, we need to apply the log transformation. Without it, we may get inaccurate and misleading predictions
-from the linear regression model.
+**11.**  The **long tail makes it quite difficult for us to see the distribution, but it has an even stronger effect on a model: such distribution can greatly confuse the model, so it won’t learn well enough**. So as a part of exploratory data analysis, we need to check the distribution of the target variable. If the target distribution has a long tail, we need to apply the log transformation. Without it, we may get inaccurate and misleading predictions from the linear regression model.
 
 One way to solve this problem is **log transformation**. If we apply the log function to the prices, in our example, it removes the undesired effect
 
-**y_new = log (y + 1)** we can achieve this log transformation through a numpy function **np.log1p** like y_new = np.log1p(y)
+**y_new = log (y + 1)** we can achieve this log transformation through a numpy function **np.log1p** like 
+        
+        y_new = np.log1p(y)
 
 The +1 part is important in cases that have zeros. The logarithm of zero is minus infinity, but the logarithm of one is zero. If our values are all non-negative, by adding 1, we make sure that the transformed values do not go below zero.
 
@@ -91,14 +89,12 @@ np.log1p() is a NumPy function that returns the **natural logarithm of 1 + x**. 
 
 **np.expm1**:
 
-To get back the original value of x after applying np.log1p(), you can use the np.expm1() function. np.expm1() is the inverse of np.log1p(), and computes exp(x) - 1, which is the reverse of the operation performed by np.log1p(x).
+To get back the original value of x after applying np.log1p(), you can use the np.expm1() function. **np.expm1() is the inverse of np.log1p()**, and computes exp(x) - 1, which is the reverse of the operation performed by np.log1p(x).
 
 
-# 12. 
-Generally, it’s good when the **target distribution looks like the normal distribution**. Under this condition, models such as linear regression perform well.
+**12.** Generally, it’s good when the **target distribution looks like the normal distribution**. Under this condition, models such as linear regression perform well.
 
-
-# 13. Normal equation:
+**13. Normal equation:**
 
 I can get the model's weights using normal equation:
 
@@ -129,23 +125,22 @@ here is how I **coded normal equation**:
 
 **note from Andrew's course on normal eq.:** 
 
-* it is only for linear regression and does not generalize to other learning algorithms 
-* solve for w and b without iteration
-* normal equation method may be used in machine learning libraries that implement linear regression (maybe useful tip in a job interview) 
-* normal equation is slow when number of features is large (> 10000)
-* keep in mind that GD is the recommended method for finding parameters w and b
++ it is only for linear regression and does not generalize to other learning algorithms 
++ solve for w and b without iteration
++ normal equation method may be used in machine learning libraries that implement linear regression (maybe useful tip in a job interview) 
++ normal equation is slow when number of features is large (> 10000)
++ keep in mind that GD is the recommended method for finding parameters w and b
 
-# 14. 
-When I have categorical data I want to apply one hot encoding, I do not need to have all the categories, within one column I mean, which may be even a bad thing and leading to an error in model training! What I learned that was to go with the like most 5 categories like I can find the most common ones easily through using value_counts like
+**14.** When I have categorical data I want to apply one hot encoding, I do not need to have all the categories, within one column I mean, which may be even a bad thing and leading to an error in model training! What I learned that was to go with the like most 5 categories like I can find the most common ones easily through using value_counts like
 
-**df['market_category'].value_counts().head()**
+        df['market_category'].value_counts().head()
 
-so what I did was to perform one hot encoding using like my following function
+so what I did was to perform one hot encoding using my following function
 
     def category_maker(df, col_name_list):
         return pd.get_dummies(df, columns=col_name_list)  
 
-then I only will choose the one hot coded columns craeted based on the most common categories like I first need to find their name like: 
+then I only will choose the one hot coded columns craeted based on the most common categories like I first need to find their names like: 
 
     market_category_cat = list(df['market_category'].value_counts().head().index)
 
@@ -158,14 +153,14 @@ then
     encoded_data = category_maker (df, (['market_category']))
     encoded_data_final = encoded_data.loc[:, added_market_category_categorical]
 
-# 15. Regularization
+**15. Regularization**
 
 We saw that adding new features does not always help, and in our case, it made things a lot worse. The reason for this behavior is **numerical instability**. One of the terms in the normal equation is the **inverse of the (np.dot(X.T, X)) matrix**. The **inversion is the issue** in our case. Sometimes, when adding new columns to X, we can accidentally add a column that is a combination of other columns. For example, if we already have the mile per gallon (MPG) in the city feature and decide to add kilometers per liter in the city, the second feature is the same as the first one but multiplied by a constant. When this happens, np.dot(X.T, X) becomes **undetermined or singular, which means that it’s not possible to find an inverse for this matrix**. If we try to invert a singular matrix, NumPy will tell us about that by raising a **LinAlgError: Singular matrix**.
 
 We may not get this error but end up having a bad model with high rmse, in these cases our code doesn’t raise any exceptions. It happened because we don’t typically have columns that are perfect linear combinations of other columns. The real data is often **noisy**, with measurement errors (such as recording 1.3 instead of 13 for MPG), rounding errors (such as storing 0.0999999 instead of 0.1), and many other errors. Technically, such matrices are not singular, so NumPy doesn’t complain.
 
 **For this numerical instability, some of the values in the weights become extremely large — a lot larger than they are supposed to be**. In numerical linear algebra, such issues are called numerical instability issues, and they are typically solved with **regularization techniques**. The **aim of regularization is to make sure that the inverse exists by forcing the matrix to be invertible**. Regularization is an important concept in machine learning: it means **“controlling” — controlling the
-weights of the model so that they behave correctly and don’t grow too large**.
+weights of the model so that they behaive correctly and don’t grow too large**.
 
 One way to do regularization is to add a small number to each diagonal element of the matrix. Then we get the following formula for linear regression:
 
