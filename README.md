@@ -588,11 +588,12 @@ As we see, the small model is only 2% better than the naive baseline, and the la
 
 Churn prediction is a complex problem, and maybe this improvement is great. However, that’s not evident from the accuracy score alone. According to accuracy, our model is only slightly better than a dummy model that treats all the customers as nonchurning and doesn’t attempt to keep any of them. Thus, we need other metrics — other ways of measuring the quality of our model. These metrics are based on the **confusion table**, the concept that we cover in the next section.
 
+**28.** Metrics for classification:
+
+
 For such cases where we have **imbalanced dataset**, we need a different way of measuring the quality of our models. We have a few options, and **most of them are based on the confusion table**: a table that concisely represents every possible outcome for our model’s predictions.
 
 ![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/classification%20metrics.PNG)    
-
-**28.** Metrics for classification:
 
 **1. Accuracy**
 
