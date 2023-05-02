@@ -59,14 +59,11 @@ Certain techniques and frameworks help us organize a machine learning project in
 
 **Figure 1 The CRISP-DM process. A machine learning project starts with understanding the problem and then moves into data preparation, training the model, and evaluating the results. Finally, the model goes to deployment. This process is iterative, and at each step, it’s possible to go back to the previous one.**
 
-# 6. 
-Testing a model on a live system is called **online testing**, and it’s important for evaluating the quality of a model on real data. This approach, however, belongs to the evaluation and deployment steps of the process, not to the modeling step.
+**6.** Testing a model on a live system is called **online testing**, and it’s important for evaluating the quality of a model on real data. This approach, however, belongs to the evaluation and deployment steps of the process, not to the modeling step.
 
-# 7. 
-If we repeat the process of model evaluation over and over again and use the **same validation dataset** for that purpose, the good numbers we observe in the validation dataset may appear just by chance. In other words, the “best” model may simply get lucky in predicting the outcomes for this particular dataset. In statistics and other fields, this problem is known as the **multiple-comparisons problem or multiple-tests problem**. The more times we make predictions on the same dataset, the more likely we are to see good performance by chance. To guard against this problem, we use the same idea: we hold out part of the data again. We call this part of data the test dataset. We use it rarely, only for testing the model that we selected as the best.
+**7.** If we repeat the process of model evaluation over and over again and use the **same validation dataset** for that purpose, the good numbers we observe in the validation dataset may appear just by chance. In other words, the “best” model may simply get lucky in predicting the outcomes for this particular dataset. In statistics and other fields, this problem is known as the **multiple-comparisons problem or multiple-tests problem**. The more times we make predictions on the same dataset, the more likely we are to see good performance by chance. To guard against this problem, we use the same idea: we hold out part of the data again. We call this part of data the test dataset. We use it rarely, only for testing the model that we selected as the best.
 
-# 8. 
-It’s important to use the model selection process and to validate and test the models in **offline settings** first to make sure that the models we train are good. If the model behaves well offline, we can decide to move to the next step and deploy the model to evaluate its performance with real users.
+**8.** It’s important to use the model selection process and to validate and test the models in **offline settings** first to make sure that the models we train are good. If the model behaves well offline, we can decide to move to the next step and deploy the model to evaluate its performance with real users.
 
 
 <a name="2"></a>
