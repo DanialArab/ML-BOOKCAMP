@@ -289,21 +289,20 @@ In regression problems, where the goal is to predict a continuous output value f
 
 That being said, there can be cases in which imbalanced data may also occur in regression problems. For example, if the range of the output values is large and the majority of the samples fall within a narrow range, the regression model may be biased towards predicting values within that range, leading to poor performance on samples outside of that range. In such cases, techniques such as data normalization or the use of different loss functions may be necessary to address the imbalanced distribution of the output values.
 
-**22.** feature importance analysis
+**22.** feature importance analysis 
 
 Knowing how other variables affect the target variable, churn, is the key to understanding the data and building a good model. This process is called feature importance analysis, and it’s often done as a part of exploratory data analysis to figure out which variables will be useful for the model. It also gives us additional insights about the dataset and helps answer questions like “What makes customers churn?” and “What are the characteristics of people who churn?” We have two different kinds of features: **categorical and numerical**. Each kind has different ways of measuring feature importance, so we will look at each separately:
 
-## 22.1. feature importance analysis - categorical features
-**1.** Comparing the group rate and the global rate:
-We can look at all the distinct values of a variable. Then, for each variable, there’s a group of customers: all the customers who have this value. For each such group, we can compute the churn rate, which is the group churn rate. When we have it, we can
-compare it with the global churn rate — the churn rate calculated for all the observations at once.
+**22.1. feature importance analysis - categorical features**
 
-If the **difference** between the rates, the group rate vs. global rate, is small, the value is not important when predicting churn because this group of customers is not really different from the rest of the customers. On the other hand, if the difference is not small, something inside that group sets it apart from the rest. A machine learning algorithm should be able to pick
-this up and use it when making predictions.
+**1.** Comparing the group rate and the global rate:
+We can look at all the distinct values of a variable. Then, for each variable, there’s a group of customers: all the customers who have this value. For each such group, we can compute the churn rate, which is the group churn rate. When we have it, we can compare it with the global churn rate — the churn rate calculated for all the observations at once.
+
+If the **difference** between the rates, the group rate vs. global rate, is small, the value is not important when predicting churn because this group of customers is not really different from the rest of the customers. On the other hand, if the difference is not small, something inside that group sets it apart from the rest. A machine learning algorithm should be able to pick this up and use it when making predictions.
 
 **2.** In addition to looking at the difference between the group rate and the global rate, it’s interesting to look at the **ratio** between them. In statistics, the ratio between probabilities in different groups is called the **risk ratio**, where risk refers to the risk of having the effect. In our case, the effect is churn, so it’s the risk of churning:
 
-risk = group rate / global rate
+    risk = group rate / global rate
 
 Risk is a number **between zero and infinity**. It has a nice interpretation that tells you how likely the elements of the group are to have the effect (churn) compared with the entire population.
 
@@ -321,11 +320,11 @@ here is the code to explore this:
         df_group['risk'] = df_group['mean'] / df_2['Churn'].value_counts(normalize= True)[1]
         display(df_group) 
 
-## feature importance analysis - categorical features -- Mutual Information
+**feature importance analysis - categorical features -- Mutual Information**
 
 The kinds of differences we just explored are useful for our analysis and important for understanding the data, but it’s hard to use them to say what the most important feature is and whether each feature is more useful than the other.
-Luckily, the **metrics of importance** can help us: we can measure the **degree of dependency between a categorical variable and the target variable**. If two variables are dependent, knowing the value of one variable gives us some information about
-another. The higher the degree of dependency, the more useful a feature is. On the other hand, if a variable is completely independent of the target variable, it’s not useful and can be safely removed from the dataset.
+
+Luckily, the **metrics of importance** can help us: we can measure the **degree of dependency between a categorical variable and the target variable**. If two variables are dependent, knowing the value of one variable gives us some information about another. The higher the degree of dependency, the more useful a feature is. On the other hand, if a variable is completely independent of the target variable, it’s not useful and can be safely removed from the dataset.
 
 For **categorical variables, one such metric is mutual information**, which tells how much information we learn about one variable if we learn the value of the other variable. It’s a concept from information theory, and in machine learning, we often use it to measure the mutual dependency between two variables.
 
@@ -339,15 +338,15 @@ Higher values of mutual information mean a higher degree of dependence: if the m
 
     pd.DataFrame.from_dict(mi_dic, orient='index', columns=['MI']).sort_values('MI', ascending = False)
 
-## 22.2. feature importance analysis - numerical features -- (Pearson’s) correlation coefficient
-Mutual information is a way to quantify the degree of dependency between **two categorical variables**, but it **doesn’t work when one of the features is numerical**. We can, however, measure the dependency between a binary target variable and a
-numerical variable. We can pretend that the **binary variable is numerical (containing only the numbers zero and one) and then use the classical methods from statistics to check for any dependency between these variables**.One such method is the **correlation coefficient (sometimes referred as Pearson’s correlation coefficient)**. It is a value from –1 to 1:
+**22.2. feature importance analysis - numerical features -- (Pearson’s) correlation coefficient**
 
-* Positive correlation means that when one variable goes up, the other variable tends to go up as well. In the case of a binary target, when the values of the variable are high, we see ones more often than zeros. But when the values of the variable are low, zeros become more frequent than ones.
+Mutual information is a way to quantify the degree of dependency between **two categorical variables**, but it **doesn’t work when one of the features is numerical**. We can, however, measure the dependency between a binary target variable and a numerical variable. We can pretend that the **binary variable is numerical (containing only the numbers zero and one) and then use the classical methods from statistics to check for any dependency between these variables**.One such method is the **correlation coefficient (sometimes referred as Pearson’s correlation coefficient)**. It is a value from –1 to 1:
 
-* Zero correlation means no relationship between two variables: they are completely independent.
++ Positive correlation means that when one variable goes up, the other variable tends to go up as well. In the case of a binary target, when the values of the variable are high, we see ones more often than zeros. But when the values of the variable are low, zeros become more frequent than ones.
 
-* Negative correlation occurs when one variable goes up and the other goes down. In the binary case, if the values are high, we see more zeros than ones in the target variable. When the values are low, we see more ones.
++ Zero correlation means no relationship between two variables: they are completely independent.
+
++ Negative correlation occurs when one variable goes up and the other goes down. In the binary case, if the values are high, we see more zeros than ones in the target variable. When the values are low, we see more ones.
 
 here is my code for calculating Pearson’s correlation coefficient:
 
@@ -363,7 +362,7 @@ shorter implementation of my code above:
 
     pd.DataFrame(df_2[numerical_cols].corrwith(df_2['Churn']), columns = ['CC']).sort_values(by = 'CC', ascending = False)
 
-# 23. feature importance analysis should be done ONLY on training data so I need to split data first into training, val, and test to make sure no knowledge can be leaked from test dataset
+**23.** feature importance analysis should be done **ONLY** on training data so I need to split data first into training, val, and test to make sure no knowledge can be leaked from test dataset
 
 My question for chatGPT:
 should i perform feature importance analysis before or after splitting data into training, val, and testing? and why? 
@@ -377,7 +376,7 @@ By splitting your data before performing feature importance analysis, **you can 
 
 In summary, it's best to split your data into training, validation, and testing sets before performing feature importance analysis to ensure that you are following best practices for machine learning and avoiding any data leakage issues.
 
-# 23.1. I actually did not use the info we gained from feature importance analysis like i expected to perform some kind of feature selection based on that but we didnot!!! yes in the end Alexey mentioned this and suggested to redo the exercise with applying this knowledge!:)
+**23.1** I actually did not use the info we gained from feature importance analysis like i expected to perform some kind of feature selection based on that but we didnot!!! yes in the end Alexey mentioned this and suggested to redo the exercise with applying this knowledge!:)
 
 my question for chatGPT:
 what is the whole point of feature importance analysis? we do it to perform feature selection, right? i mean we included only the important features in the model training instead of all the features?
@@ -391,18 +390,17 @@ There are different techniques for feature selection, including **filter methods
 
 It's important to note that feature importance analysis is not always necessary or appropriate for every machine learning problem. For example, some models like neural networks are less interpretable and may not provide feature importance scores. In other cases, the data may have low feature dimensionality or the features may all be important, making feature selection less necessary. Ultimately, the decision to perform feature importance analysis and feature selection depends on the specific machine learning problem and the characteristics of the data.
 
-# 24. feature engineering -- encoding 
+**24. feature engineering -- encoding**
+
 **After performing feature importance analysis**, and **before we proceed to training**, however, we need to perform the feature engineering step: **transforming all categorical variables to numeric features**. 
 
-We cannot just take a categorical variable and put it into a machine learning model. The **models can deal only with numbers
-in matrices**. So, we need to convert our categorical data into a matrix form, or encode. **One such encoding technique is one-hot encoding.**
+We cannot just take a categorical variable and put it into a machine learning model. The **models can deal only with numbers in matrices**. So, we need to convert our categorical data into a matrix form, or encode. **One such encoding technique is one-hot encoding.**
 
 We can use Scikit-learn to perform one-hot encoding. We can perform one-hot encoding in multiple ways in Scikit-learn, but we will use **DictVectorizer.** As the name suggests, DictVectorizer takes in a dictionary and vectorizes it — that is, it creates vectors from it. Then the vectors are put together as rows of one matrix.
 
-**side note**: Too convert a dataframe to a list of dictionaries, we use the **to_dict** method with the **orient="records"**
-parameter:
+**side note**: To convert a dataframe to a list of dictionaries, we use the **to_dict** method with the **orient="records"** parameter:
 
-**train_dict = df_train[categorical + numerical].to_dict(orient='records')**
+    train_dict = df_train[categorical + numerical].to_dict(orient='records')
 
 Here is the code to perform one-hot encoding using DictVectorizer (I use OneHotEncoder from sklearn though):
 
@@ -415,7 +413,7 @@ Here is the code to perform one-hot encoding using DictVectorizer (I use OneHotE
 
 The DictVectorizer class can take in a set of parameters. We specify one of them: **sparse=False**. This parameter means that the created matrix will not be sparse and instead will create a simple NumPy array.
 
-# 24.1 I need to encode the new datapoint in the same way as I encoded my dataset used in modeling, so here is how i can save the encoder object to be able to use it later
+**24.1** I need to encode the new datapoint in the same way as I encoded my dataset used in modeling, so here is how i can save the encoder object to be able to use it later
 
 **Save the encoder object to be used later**
 
@@ -429,19 +427,20 @@ Preprocess the new data using the same encoder object
         encoder = pickle.load(f)
     encoded_new_data = encoder.transform(new_data[cat_features])
 
-# 25. Logistic regression 
+**25. Logistic regression**
+
 **side note:** Linear regression is a linear model. It’s called linear because it **combines the weights of the model with the feature vector linearly, using the dot product.** Linear models are simple to implement, train, and use. Because of their simplicity, they are also fast.
 
 Logistic regression is also a linear model, but unlike linear regression, it’s a classification model, not regression, even though the name might suggest that. It’s a **binary classification model, so the target variable yi is binary; the only values it can have are zero and one.** Observations with yi = 1 are typically called positive examples: examples in which the effect we want to predict is present. Likewise, examples with yi = 0 are called negative examples: the effect we want to predict is absent.
 
 The **output of logistic regression is probability — the probability that the observation xi is positive, or, in other words, the probability that yi = 1.**
 
-To be able to treat the output as a probability, we need to make sure that the predictions of the model always stay between zero and one. We use a special mathematical function for this purpose called **sigmoid**, and the full formula for the logistic
-regression model is
+To be able to treat the output as a probability, we need to make sure that the predictions of the model always stay between zero and one. We use a special mathematical function for this purpose called **sigmoid**, and the full formula for the logistic regression model is
 
 ![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/logistic_regression_formula.PNG)
 
 If we compare it with the linear regression formula, the only difference is this sigmoid function: in case of linear regression, we have only w0 + xiTw. This is why both of these models are linear; they are both based on the dot product operation.
+
 The sigmoid function maps any value to a number between zero and one. It’s defined this way:
 
 ![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/sigmoid.PNG)
@@ -456,30 +455,29 @@ The parameters of the logistic regression model are the same as for linear regre
     w = (w1, w2, …, wn) is the weights vector
     
 
-## How to code logistic regression 
+**How to code logistic regression**
 
-**model = LogisticRegression(solver='liblinear', random_state=1)**
+    model = LogisticRegression(solver='liblinear', random_state=1)
 
 random_state. The seed number for the random-number generator. It shuffles the data when training the model; to make sure the shuffle is the same every time, we fix the seed.
 
 Other useful parameters for the model include C, which controls the regularization level. Specifying C is optional; by default, it gets the value 1.0.
 
-**model.fit(X_train, y_train)**
+    model.fit(X_train, y_train)
 
-**y_pred = model.predict_proba(X_val)**
+    y_pred = model.predict_proba(X_val)
 
-The result of predict_proba is a two-dimensional NumPy array, or a two-column matrix. The first column of the array contains the probability that the target is negative (no churn), and the second column contains the probability that the target is positive
-(churn). These columns convey the same information. We know the probability of churn — it’s p — and the probability of not churning is always 1 – p, so we don’t need both columns.
+The result of predict_proba is a two-dimensional NumPy array, or a two-column matrix. The first column of the array contains the probability that the target is negative (no churn), and the second column contains the probability that the target is positive (churn). These columns convey the same information. We know the probability of churn — it’s p — and the probability of not churning is always 1 – p, so we don’t need both columns.
 
-**y_pred_soft = model.predict_proba(X_val)[:, 1]**  
+    y_pred_soft = model.predict_proba(X_val)[:, 1]
 
 This output (probabilities) is often called **soft predictions**. These tell us the probability of churning as a number between zero and one. It’s up to us to decide how to interpret this number and how to use it.
 
 To make the actual decision about whether to send a promotional letter to our customers, using the probability alone is not enough. We need **hard predictions — binary values of True (churn, so send the mail) or False (not churn, so don’t send the mail).**
 
-**y_pred_hard = (y_pred > threshold).astype(int)**
+    y_pred_hard = (y_pred > threshold).astype(int)
 
-**accuracy = (y_val == y_pred_hard).mean()**
+    accuracy = (y_val == y_pred_hard).mean()
 
 **side_note:**
 model.predict **(y_pred = model.predict(X_val))** does not have such a parameter to specify threshold?
@@ -488,9 +486,9 @@ That's correct, the predict method in scikit-learn does not have a parameter to 
 
 If you want to adjust the classification threshold for your model, you will need to use the **predict_proba method** instead, which returns the predicted probabilities of each class. You can then apply your own threshold to these probabilities to make the final classification decision.
 
-## How to get the model parameters
+**How to get the model parameters**
 
-**bias_term = model.intercept_[0]**
+    bias_term = model.intercept_[0]
 
 The rest of the weights are stored in **model.coef_[0]**. To see which feature is associated with each weight: 
 
