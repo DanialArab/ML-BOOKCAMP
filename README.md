@@ -10,7 +10,7 @@ This repository documents my notes from the book Machine Learning Bookcamp by Al
 
 3. [Machine learning for classification](#3)
 
-4.1 [Evaluation metrics for classification](#4.1)
+4  [Evaluation metrics](#4)
 
 5. [Deploying machine learning models](#5)
 
@@ -507,7 +507,10 @@ calculate the feature importance scores
     for feature, importance in sorted(feat_imp_dict.items(), key=lambda x: x[1], reverse=True):
         print(feature + ': {:.2f}'.format(importance))
         
-<a name="4.1"></a>
+<a name="4"></a>
+## 4.1 Evaluation metrics
+
+<a name="4"></b>
 ## 4.1 Evaluation metrics for classification
 
 # 26. Dummy baseline
