@@ -510,7 +510,7 @@ calculate the feature importance scores
         print(feature + ': {:.2f}'.format(importance))
         
 <a name="4"></a>
-## 4.1 Evaluation metrics
+## 4. Evaluation metrics
 
 <a name="5"></b>
 ### 4.1 Evaluation metrics for regression
