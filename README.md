@@ -200,10 +200,315 @@ The normal equation is a closed-form solution to the linear regression problem, 
 
 
 
-
 <a name="3"></a>
 ## 3. Machine learning for classification
 
+**18.** Logistic regression is a workhorse of machine learning and the most widely used model in the industry.
+
+**19.** How to identify which features are important in our data? Through implement feature importance.
+
+One way to identify which features are important in your data is to implement feature importance analysis. Feature importance is a technique used in machine learning to determine the relative importance of each feature or variable in predicting the target variable.
+
+There are different methods to calculate feature importance, such as:
+
++ Recursive Feature Elimination (RFE): RFE is a backward feature selection method that recursively removes features and builds a model on the remaining features until a desired number of features is reached. The importance of each feature is determined by the order in which they are removed.
+
++ Random Forest Feature Importance: Random Forest is an ensemble learning method that builds multiple decision trees and combines their predictions to improve accuracy. The importance of each feature is determined by measuring how much the performance of the model decreases when the feature is randomly shuffled or removed.
+
++ Gradient Boosting Feature Importance: Gradient Boosting is a machine learning technique that builds an ensemble of weak prediction models in a stepwise manner. The importance of each feature is determined by measuring how much the loss function of the model increases when the feature is removed.
+
+By implementing feature importance analysis, we can identify which features have the most significant impact on the target variable and use them to build more accurate predictive models. This can also help in reducing the dimensionality of the data, which can improve the performance and interpretability of the model.
+
+**20.** a couple of good tricks when doing EDA:
+
+1. Try to transpose the df to see all the columns in the screen like
+
+    df.head().T
+
+2. Watch out for cases when you expect a column to be numeric, but Pandas says it’s not: most likely the column contains special encoding (like a space " " ) for missing values that require additional preprocessing.
+
+We can force this column to be numeric by converting it to numbers using a special function in Pandas: **to_numeric**. By default, this function raises an exception when it sees nonnumeric data (such as spaces), but we can make it skip these cases by specifying the **errors='coerce' option. This way Pandas will replace all nonnumeric values with a NaN (not a number)** like: 
+
+    df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce')
+
+    df['TotalCharges'] = df['TotalCharges'].fillna(0)
+
+I achived this using
+
+    df['TotalCharges'] = df['TotalCharges'].str.replace(' ', '0').astype(float)
+
+3. Another good thing to check is to see if there is any space in the values of the columns with object type and if so replace it with let's say underscores:
+
+    string_columns_list = df_2.dtypes[df_2.dtypes =='object'].index
+    
+    for one_col in string_columns_list:
+    
+        df_2[one_col] = df_2[one_col].str.lower().str.replace(' ', '_')
+
+4. I need to take care of categorial target variables in a way that yes/no wil be converted to 1/0:
+
+        df_2['Churn'] = (df_2['Churn'] == 'yes').astype(int)
+
+**21.** How to deal with imbalanced data?
+
+The data set could be either imbalanced or balanced, in a balanced dataset the **positive and negative classes are equally distributed among all observations.** So before going ahead and train the model first figure out if the dataset is whether or not balanced. 
+
+Suppose you are working on a project where the data is imbalanced. What techniques would you use to address this problem?
+
+chatGPT response:
+
+Imbalanced data is a common problem in machine learning where one class has significantly fewer samples than the other class(es). In such cases, the classifier may be biased towards the majority class, leading to poor performance on the minority class. Here are some techniques that can be used to address imbalanced data:
+
++ Resampling techniques: Resampling techniques involve either oversampling the minority class or undersampling the majority class to balance the dataset. Oversampling techniques include duplicating the minority class samples or generating new synthetic samples using techniques like SMOTE (Synthetic Minority Over-sampling Technique). Undersampling techniques involve randomly removing samples from the majority class to match the number of samples in the minority class.
+
++ Cost-sensitive learning: Cost-sensitive learning involves assigning different misclassification costs to different classes based on their importance. The misclassification cost of the minority class is generally higher than the majority class, and the classifier is penalized more for misclassifying minority class samples.
+
++ Ensemble methods: Ensemble methods like bagging and boosting can be used to improve the performance of classifiers on imbalanced data. These methods involve combining multiple classifiers trained on different subsets of the data to improve the overall performance.
+
+Random Forest and XGBoost are both ensemble methods that can be used to address imbalanced data problems in classification tasks.
+
+Random Forest is a bagging ensemble method that trains multiple decision trees on random subsets of the training data and aggregates their predictions to make the final classification decision. The randomization of the training data subsets and the selection of a random subset of features for each tree helps to reduce overfitting and improve the generalization performance of the classifier. In the case of imbalanced data, Random Forest can help to balance the classification performance by considering different subsets of the minority class during training and improving the overall classification performance.
+
+XGBoost is a boosting ensemble method that combines weak learners (typically decision trees) to create a stronger classifier. XGBoost iteratively trains decision trees on the residual errors of the previous iteration, focusing on the samples that were misclassified in the previous iteration. XGBoost also uses regularization techniques such as L1 and L2 regularization, which helps to reduce overfitting and improve the generalization performance of the classifier. In the case of imbalanced data, XGBoost can help to balance the classification performance by giving more weight to the minority class during training and improving the overall classification performance.
+
+Both Random Forest and XGBoost have been shown to be effective in handling imbalanced data problems in classification tasks. However, the choice between the two methods may depend on the specific characteristics of the dataset and the problem at hand. In general, Random Forest may be more suitable for datasets with moderate imbalances, while XGBoost may be more suitable for datasets with severe imbalances.
+
++ Threshold adjustment: The decision threshold of the classifier can be adjusted to increase the recall of the minority class. This involves changing the threshold at which a sample is classified as positive or negative to increase the sensitivity towards the minority class.
+
++ Use of evaluation metrics: Evaluation metrics like precision, recall, F1 score, and AUC ROC can be used to evaluate the performance of the classifier on imbalanced data. These metrics can provide a better understanding of the classifier's performance on the minority class and help in selecting the appropriate technique to address the imbalanced data problem.
+
+It is important to note that the choice of technique depends on the specific problem and the dataset. It is also important to ensure that the technique does not introduce bias or overfitting to the data. Therefore, a careful analysis of the data and the problem is necessary before selecting a technique to address the imbalanced data problem.
+
+so this imballanced dataset issue is only for classification and not regression right?
+
+chatGPT response:
+
+Imbalanced data is typically considered an issue in classification problems, where the goal is to predict a categorical label for each input sample. In classification problems, imbalanced data can result in a classifier that is biased towards the majority class, leading to poor performance on the minority class.
+
+In regression problems, where the goal is to predict a continuous output value for each input sample, imbalanced data is not usually a concern. However, there can be other issues related to the distribution of the output values, such as skewness or outliers, which can affect the performance of the regression model. These issues may require different techniques to address, such as data normalization or the use of robust regression methods.
+
+That being said, there can be cases in which imbalanced data may also occur in regression problems. For example, if the range of the output values is large and the majority of the samples fall within a narrow range, the regression model may be biased towards predicting values within that range, leading to poor performance on samples outside of that range. In such cases, techniques such as data normalization or the use of different loss functions may be necessary to address the imbalanced distribution of the output values.
+
+**22.** feature importance analysis
+
+Knowing how other variables affect the target variable, churn, is the key to understanding the data and building a good model. This process is called feature importance analysis, and it’s often done as a part of exploratory data analysis to figure out which variables will be useful for the model. It also gives us additional insights about the dataset and helps answer questions like “What makes customers churn?” and “What are the characteristics of people who churn?” We have two different kinds of features: **categorical and numerical**. Each kind has different ways of measuring feature importance, so we will look at each separately:
+
+## 22.1. feature importance analysis - categorical features
+**1.** Comparing the group rate and the global rate:
+We can look at all the distinct values of a variable. Then, for each variable, there’s a group of customers: all the customers who have this value. For each such group, we can compute the churn rate, which is the group churn rate. When we have it, we can
+compare it with the global churn rate — the churn rate calculated for all the observations at once.
+
+If the **difference** between the rates, the group rate vs. global rate, is small, the value is not important when predicting churn because this group of customers is not really different from the rest of the customers. On the other hand, if the difference is not small, something inside that group sets it apart from the rest. A machine learning algorithm should be able to pick
+this up and use it when making predictions.
+
+**2.** In addition to looking at the difference between the group rate and the global rate, it’s interesting to look at the **ratio** between them. In statistics, the ratio between probabilities in different groups is called the **risk ratio**, where risk refers to the risk of having the effect. In our case, the effect is churn, so it’s the risk of churning:
+
+risk = group rate / global rate
+
+Risk is a number **between zero and infinity**. It has a nice interpretation that tells you how likely the elements of the group are to have the effect (churn) compared with the entire population.
+
+If the difference between the group rate and the global rate is small, the risk is close to 1: this group has the same level of risk as the rest of the population. Customers in the group are as likely to churn as anyone else. In other words, a group with a risk close to 1 is not risky at all. 
+
+If the risk is lower than 1, the group has lower risks: the churn rate in this group is smaller than the global churn. For example, the value 0.5 means that the clients in this group are two times less likely to churn than clients in general. On the other hand, if the value is higher than 1, the group is risky: there’s more churn in the group than in the population. So a risk of 2 means that customers from the group are two times more likely to churn.
+
+here is the code to explore this:
+
+    from IPython.display import display
+    df_final_group = pd.DataFrame()
+    for one_cat_col in cat_columns:
+        df_group = df_2.groupby(one_cat_col)['Churn'].agg(['mean'])
+        df_group['diff'] = df_group['mean'] -  df_2['Churn'].value_counts(normalize= True)[1]
+        df_group['risk'] = df_group['mean'] / df_2['Churn'].value_counts(normalize= True)[1]
+        display(df_group) 
+
+## feature importance analysis - categorical features -- Mutual Information
+
+The kinds of differences we just explored are useful for our analysis and important for understanding the data, but it’s hard to use them to say what the most important feature is and whether each feature is more useful than the other.
+Luckily, the **metrics of importance** can help us: we can measure the **degree of dependency between a categorical variable and the target variable**. If two variables are dependent, knowing the value of one variable gives us some information about
+another. The higher the degree of dependency, the more useful a feature is. On the other hand, if a variable is completely independent of the target variable, it’s not useful and can be safely removed from the dataset.
+
+For **categorical variables, one such metric is mutual information**, which tells how much information we learn about one variable if we learn the value of the other variable. It’s a concept from information theory, and in machine learning, we often use it to measure the mutual dependency between two variables.
+
+Higher values of mutual information mean a higher degree of dependence: if the mutual information between a categorical variable and the target is high, this categorical variable will be quite useful for predicting the target. On the other hand, if the mutual information is low, the categorical variable and the target are independent, and thus the variable will not be useful for predicting the target. Mutual information is already implemented in Scikit-learn in the mutual_info_ score function from the metrics package, so we can just use it:
+
+    from sklearn.metrics import mutual_info_score
+    
+    mi_dic = {}
+    for one_cat_col in cat_columns:
+        mi_dic[one_cat_col] = mutual_info_score (df_2[one_cat_col], df_2['Churn'])
+
+    pd.DataFrame.from_dict(mi_dic, orient='index', columns=['MI']).sort_values('MI', ascending = False)
+
+## 22.2. feature importance analysis - numerical features -- (Pearson’s) correlation coefficient
+Mutual information is a way to quantify the degree of dependency between **two categorical variables**, but it **doesn’t work when one of the features is numerical**. We can, however, measure the dependency between a binary target variable and a
+numerical variable. We can pretend that the **binary variable is numerical (containing only the numbers zero and one) and then use the classical methods from statistics to check for any dependency between these variables**.One such method is the **correlation coefficient (sometimes referred as Pearson’s correlation coefficient)**. It is a value from –1 to 1:
+
+* Positive correlation means that when one variable goes up, the other variable tends to go up as well. In the case of a binary target, when the values of the variable are high, we see ones more often than zeros. But when the values of the variable are low, zeros become more frequent than ones.
+
+* Zero correlation means no relationship between two variables: they are completely independent.
+
+* Negative correlation occurs when one variable goes up and the other goes down. In the binary case, if the values are high, we see more zeros than ones in the target variable. When the values are low, we see more ones.
+
+here is my code for calculating Pearson’s correlation coefficient:
+
+    numerical_cols = ['Monthlycharges' , 'Totalcharges', 'Tenure']
+    corelation_coef_dic = {}
+
+    for one_col in numerical_cols:
+        corelation_coef_dic[one_col] = df_2[one_col].corr(df_2['Churn'])
+
+    pd.DataFrame.from_dict(corelation_coef_dic,  orient='index', columns=['CC']).sort_values(by = 'CC', ascending = False)
+
+shorter implementation of my code above:
+
+    pd.DataFrame(df_2[numerical_cols].corrwith(df_2['Churn']), columns = ['CC']).sort_values(by = 'CC', ascending = False)
+
+# 23. feature importance analysis should be done ONLY on training data so I need to split data first into training, val, and test to make sure no knowledge can be leaked from test dataset
+
+My question for chatGPT:
+should i perform feature importance analysis before or after splitting data into training, val, and testing? and why? 
+
+Re:
+It is generally recommended to perform **feature importance analysis after splitting your data into training, validation, and testing sets.**
+
+The main reason for this is to **avoid any data leakage, which can occur if you perform feature importance analysis on your entire dataset before splitting it.** Data leakage can happen when information from the validation or test set inadvertently leaks into the training set, leading to overly optimistic performance estimates and poor generalization to new data.
+
+By splitting your data before performing feature importance analysis, **you can ensure that you are only using information from the training set to select important features**, and that **your validation and test sets remain untouched until you are ready to evaluate your model's performance on unseen data.** This helps to **prevent any potential biases or overfitting that could arise from using all of your data at once.**
+
+In summary, it's best to split your data into training, validation, and testing sets before performing feature importance analysis to ensure that you are following best practices for machine learning and avoiding any data leakage issues.
+
+# 23.1. I actually did not use the info we gained from feature importance analysis like i expected to perform some kind of feature selection based on that but we didnot!!! yes in the end Alexey mentioned this and suggested to redo the exercise with applying this knowledge!:)
+
+my question for chatGPT:
+what is the whole point of feature importance analysis? we do it to perform feature selection, right? i mean we included only the important features in the model training instead of all the features?
+
+Re:
+Yes, the primary purpose of feature importance analysis is to identify the most important features for a given machine learning problem. Once we have identified the most important features, we can use this information to perform feature selection, which involves selecting a subset of the features that are most relevant to the target variable and excluding the rest.
+
+Feature selection is important because it can help improve the performance of a machine learning model by reducing overfitting, increasing interpretability, and reducing training and inference time. By removing irrelevant or redundant features, we can simplify the model and improve its generalization performance on new, unseen data.
+
+There are different techniques for feature selection, including **filter methods, wrapper methods, and embedded methods**. **Feature importance analysis is typically used as a filter method, which means that it ranks the importance of each feature based on some criterion and selects the top-ranked features for inclusion in the model**. Common criteria for ranking feature importance include the magnitude of the feature coefficients in a linear model, the decrease in impurity in a decision tree-based model, or the permutation importance in a tree-based or ensemble model.
+
+It's important to note that feature importance analysis is not always necessary or appropriate for every machine learning problem. For example, some models like neural networks are less interpretable and may not provide feature importance scores. In other cases, the data may have low feature dimensionality or the features may all be important, making feature selection less necessary. Ultimately, the decision to perform feature importance analysis and feature selection depends on the specific machine learning problem and the characteristics of the data.
+
+# 24. feature engineering -- encoding 
+**After performing feature importance analysis**, and **before we proceed to training**, however, we need to perform the feature engineering step: **transforming all categorical variables to numeric features**. 
+
+We cannot just take a categorical variable and put it into a machine learning model. The **models can deal only with numbers
+in matrices**. So, we need to convert our categorical data into a matrix form, or encode. **One such encoding technique is one-hot encoding.**
+
+We can use Scikit-learn to perform one-hot encoding. We can perform one-hot encoding in multiple ways in Scikit-learn, but we will use **DictVectorizer.** As the name suggests, DictVectorizer takes in a dictionary and vectorizes it — that is, it creates vectors from it. Then the vectors are put together as rows of one matrix.
+
+**side note**: Too convert a dataframe to a list of dictionaries, we use the **to_dict** method with the **orient="records"**
+parameter:
+
+**train_dict = df_train[categorical + numerical].to_dict(orient='records')**
+
+Here is the code to perform one-hot encoding using DictVectorizer (I use OneHotEncoder from sklearn though):
+
+    train_dict = df_train[categorical + numerical].to_dict(orient='records')
+    from sklearn.feature_extraction import DictVectorizer
+    dv = DictVectorizer(sparse=False)
+    dv.fit(train_dict)
+    X_train = dv.transform(train_dict)
+    dv.get_feature_names()
+
+The DictVectorizer class can take in a set of parameters. We specify one of them: **sparse=False**. This parameter means that the created matrix will not be sparse and instead will create a simple NumPy array.
+
+# 24.1 I need to encode the new datapoint in the same way as I encoded my dataset used in modeling, so here is how i can save the encoder object to be able to use it later
+
+**Save the encoder object to be used later**
+
+    import pickle
+    with open('encoder.pkl', 'wb') as f:
+        pickle.dump(encoder, f)
+    
+Preprocess the new data using the same encoder object
+
+    with open('encoder.pkl', 'rb') as f:
+        encoder = pickle.load(f)
+    encoded_new_data = encoder.transform(new_data[cat_features])
+
+# 25. Logistic regression 
+**side note:** Linear regression is a linear model. It’s called linear because it **combines the weights of the model with the feature vector linearly, using the dot product.** Linear models are simple to implement, train, and use. Because of their simplicity, they are also fast.
+
+Logistic regression is also a linear model, but unlike linear regression, it’s a classification model, not regression, even though the name might suggest that. It’s a **binary classification model, so the target variable yi is binary; the only values it can have are zero and one.** Observations with yi = 1 are typically called positive examples: examples in which the effect we want to predict is present. Likewise, examples with yi = 0 are called negative examples: the effect we want to predict is absent.
+
+The **output of logistic regression is probability — the probability that the observation xi is positive, or, in other words, the probability that yi = 1.**
+
+To be able to treat the output as a probability, we need to make sure that the predictions of the model always stay between zero and one. We use a special mathematical function for this purpose called **sigmoid**, and the full formula for the logistic
+regression model is
+
+![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/logistic_regression_formula.PNG)
+
+If we compare it with the linear regression formula, the only difference is this sigmoid function: in case of linear regression, we have only w0 + xiTw. This is why both of these models are linear; they are both based on the dot product operation.
+The sigmoid function maps any value to a number between zero and one. It’s defined this way:
+
+![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/sigmoid.PNG)
+
+![](https://raw.githubusercontent.com/DanialArab/images/main/ML_bookcamp/sigmoid_function.PNG)
+
+The sigmoid function outputs values that are always between 0 and 1. When  the input is 0, the result of sigmoid is 0.5; for negative values, the results are below 0.5 and start approaching 0 for input values less than **–6**. When the input is positive, the result of sigmoid is above 0.5 and approaches 1 for input values starting from **6.**
+
+The parameters of the logistic regression model are the same as for linear regression:
+
+    w0 is the bias term.
+    w = (w1, w2, …, wn) is the weights vector
+    
+
+## How to code logistic regression 
+
+**model = LogisticRegression(solver='liblinear', random_state=1)**
+
+random_state. The seed number for the random-number generator. It shuffles the data when training the model; to make sure the shuffle is the same every time, we fix the seed.
+
+Other useful parameters for the model include C, which controls the regularization level. Specifying C is optional; by default, it gets the value 1.0.
+
+**model.fit(X_train, y_train)**
+
+**y_pred = model.predict_proba(X_val)**
+
+The result of predict_proba is a two-dimensional NumPy array, or a two-column matrix. The first column of the array contains the probability that the target is negative (no churn), and the second column contains the probability that the target is positive
+(churn). These columns convey the same information. We know the probability of churn — it’s p — and the probability of not churning is always 1 – p, so we don’t need both columns.
+
+**y_pred_soft = model.predict_proba(X_val)[:, 1]**  
+
+This output (probabilities) is often called **soft predictions**. These tell us the probability of churning as a number between zero and one. It’s up to us to decide how to interpret this number and how to use it.
+
+To make the actual decision about whether to send a promotional letter to our customers, using the probability alone is not enough. We need **hard predictions — binary values of True (churn, so send the mail) or False (not churn, so don’t send the mail).**
+
+**y_pred_hard = (y_pred > threshold).astype(int)**
+
+**accuracy = (y_val == y_pred_hard).mean()**
+
+**side_note:**
+model.predict **(y_pred = model.predict(X_val))** does not have such a parameter to specify threshold?
+
+That's correct, the predict method in scikit-learn does not have a parameter to specify the threshold for classification. The predict method simply returns the predicted class labels for the input data, based on the **default threshold of 0.5 for binary classification** (and argmax for multiclass classification).
+
+If you want to adjust the classification threshold for your model, you will need to use the **predict_proba method** instead, which returns the predicted probabilities of each class. You can then apply your own threshold to these probabilities to make the final classification decision.
+
+## How to get the model parameters
+
+**bias_term = model.intercept_[0]**
+
+The rest of the weights are stored in **model.coef_[0]**. To see which feature is associated with each weight: 
+
+    feature_names = list(X.columns)
+
+get the absolute values of the coefficients
+
+    coef_abs = np.abs(model.coef_)
+
+calculate the feature importance scores
+
+    feature_importance = np.sum(coef_abs, axis=0)
+
+    feat_imp_dict = dict(zip(feature_names, feature_importance))
+
+    for feature, importance in sorted(feat_imp_dict.items(), key=lambda x: x[1], reverse=True):
+        print(feature + ': {:.2f}'.format(importance))
+        
 <a name="4"></a>
 ## 4. Evaluation metrics for classification
 
