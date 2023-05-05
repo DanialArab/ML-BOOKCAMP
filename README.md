@@ -477,7 +477,7 @@ This output (probabilities) is often called **soft predictions**. These tell us 
 
 To make the actual decision about whether to send a promotional letter to our customers, using the probability alone is not enough. We need **hard predictions — binary values of True (churn, so send the mail) or False (not churn, so don’t send the mail).**
 
-    y_pred_hard = (y_pred > threshold).astype(int)
+    y_pred_hard = (y_pred_soft > threshold).astype(int)
 
     accuracy = (y_val == y_pred_hard).mean()
 
