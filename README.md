@@ -639,6 +639,12 @@ The better the recall, the fewer false negatives we have.
 
 We see that both precision and recall don’t take **true negatives** into account. **This is exactly why they are good evaluation metrics for imbalanced datasets.** For situations with class imbalance, true negatives typically outnumber everything else — but at the same time, they are also often not really interesting for us. Precision and recall are useful metrics, but they describe the performance of a classifier only at a **certain threshold**. Often it’s useful to have a metric that summarizes the performance of a classifier for all possible threshold choices. We look at such metrics in the next section.
 
+**Precision-recall trade-off**
+
+When plotting precision and recall for different threshold values, we can see that a conflict exists between precision and recall: when one goes up, the other goes down, and the other way around. This is called the “precision-recall tradeoff”: we cannot select a threshold that makes both precision and recall good. However, we do have strategies for selecting the threshold, even though precision and recall are conflicting. One of them is plotting precision and recall curves and seeing where they intersect, and using this threshold for binarizing the predictions. 
+
+Another idea for working around the precision-recall trade-off is the F1 score — a score that combines both precision and recall into one value. Then, to select the best threshold, we can simply choose the one that maximizes the F1 score. 
+
 **5. ROC (receiver operating characteristics) and AUC (area under the ROC curve)**
 
 The metrics we have covered so far work only with binary predictions — when we have only True and False values in the output. However, we do have ways to evaluate the performance of a model across all possible threshold choices. ROC curves is one of
