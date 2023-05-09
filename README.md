@@ -788,7 +788,7 @@ saving the model:
 
     import pickle
     with open('model_and_encoder.pkl', 'wb') as f_out:
-    pickle.dump({'encoder': encoder, 'model': model}, f_out)
+        pickle.dump({'encoder': encoder, 'model': model}, f_out)
 
 loading the model:
 
@@ -797,6 +797,9 @@ loading the model:
 
         encoder = data['encoder']
         model = data['model']
+
+**32. Serving the model**
+
 
 <a name="8"></a>
 ## 6. Decision trees and ensemble learning
