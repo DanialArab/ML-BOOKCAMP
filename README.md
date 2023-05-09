@@ -798,7 +798,7 @@ loading the model:
         encoder = data['encoder']
         model = data['model']
 
-The necessary codes for training and making predictions were saved in python scripts, named training.py and predict.py, respectively. This allows us to run these scripts in terminal ratrher than needing to run all the cells of the jupyter notebooks. 
+The necessary codes for training and making predictions were saved in python scripts, named training.py and predict.py, respectively, which are pushed to this repo. This allows us to run these scripts in terminal ratrher than needing to run all the cells of the jupyter notebooks. 
 
 **32. Serving the model**
 
