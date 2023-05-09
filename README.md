@@ -776,7 +776,7 @@ In general, parameter tuning is an important step in machine learning, as it can
 
 It is the process of putting models to use. 
 
-The model lives in our jupyter notebook, and once we stop the Jupyter Notebook, the trained model will disappear. This means that now we can use it only inside the notebook and nowhere else. To solve this issue we need to deploy our model. 
+The model we trained lives in our jupyter notebook, and once we stop the Jupyter Notebook, the trained model will disappear. This means that now we can use it only inside the notebook and nowhere else. To solve this issue we need to deploy our model. 
 
 
 <a name="8"></a>
