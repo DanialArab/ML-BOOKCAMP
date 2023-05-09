@@ -772,6 +772,34 @@ In general, parameter tuning is an important step in machine learning, as it can
 <a name="7"></a>
 ## 5. Deploying machine learning models
 
+**30. Model deployment**
+
+It is the process of putting models to use. 
+
+The model we trained lives in our jupyter notebook, and once we stop the Jupyter Notebook, the trained model will disappear. This means that now we can use it only inside the notebook and nowhere else. To solve this issue we need to deploy our model. 
+
+**31. Saving and loading model using Pickle**
+
+To be able to use our model outside of our notebook, we need to save it, and then later, another process can load and use it. Pickle is a **serialization/deserialization module** that’s already built into Python: using it, we can save an arbitrary Python object (with a few exceptions) to a file. Once we have a file, we can load the model from there in a different process.
+
+**Cool point**: “Pickle” can also be used as a verb: pickling an object in Python means saving it using the Pickle module.
+
+saving the model:
+
+    import pickle
+    with open('model_and_encoder.pkl', 'wb') as f_out:
+        pickle.dump({'encoder': encoder, 'model': model}, f_out)
+
+loading the model:
+
+    with open('model_and_encoder.pkl', 'rb') as f_in:
+        data = pickle.load(f_in)
+
+        encoder = data['encoder']
+        model = data['model']
+
+**32. Serving the model**
+
 
 <a name="8"></a>
 ## 6. Decision trees and ensemble learning
